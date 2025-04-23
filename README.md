@@ -22,6 +22,10 @@
 - **Delete File**: Frees the blocks occupied by a file.
 - **Defragmentation**: Compacts memory to optimize storage and reduce fragmentation.
 
+## Input Format
+
+The program accepts input in a specific format. For detailed input specifications, refer to the [Input Format Specification](./InputFormatSpecification.md).
+
 ## How to Run
 
 1. Clone the repository:

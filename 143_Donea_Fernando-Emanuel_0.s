@@ -42,11 +42,11 @@
 .global main
 
 
-//OPERATIA ADD
+#OPERATIA ADD
 
 et_citire_add:
 
-    //citire numar fisiere
+    #citire numar fisiere
     pushl $nrFis
     pushl $formatRead
     call scanf
@@ -61,7 +61,7 @@ et_citire_add_loop:
     cmpl nrFis, %ebx
     je et_citire_add_exit
 
-    //citire id si dimensiune
+    #citire id si dimensiune
     pushl $id
     pushl $formatRead
     call scanf
@@ -72,7 +72,7 @@ et_citire_add_loop:
     call scanf
     addl $8, %esp
 
-    //verificare_frecventa fr[id]!=0
+    #verificare_frecventa fr[id]!=0
     movl id, %ecx
     lea fr, %edi
     movl (%edi,%ecx,4), %ebx
@@ -92,7 +92,7 @@ et_post_verificare_memorie:
 
 et_cont_citire_add_loop:
 
-    // afisare id : (start, end\n)
+    # afisare id : (start, end\n)
     push end
     push start
     push id
@@ -115,7 +115,7 @@ et_citire_add_exit:
 
 et_deja_exista:
 
-    // afisare id : (0, 0\n)
+    # afisare id : (0, 0\n)
     push id
     push $formatAfisDejaExista
     call printf
@@ -130,7 +130,7 @@ et_deja_exista:
 
 verificare_memorie:
 
-    //blocksNec = (dim+7)/8
+    #Numar de blocuri necesare = (dim+7)/8
     movl $8, %ebx
     movl dim, %eax
     xorl %edx, %edx
@@ -138,10 +138,10 @@ verificare_memorie:
     divl %ebx
     movl %eax, blocksNec
     
-    //blocksDisp=0
+    #blocksDisp=0
     movl $0, blocksDisp
 
-    //ok=false
+    #ok=false
     movl $0, ok
 
     movl $0, start
@@ -159,7 +159,7 @@ verificare_memorie_loop:
     movl index_verificare_memorie, %ecx
     movl (%edi,%ecx,4),%ebx
 
-    // if v[i]==0
+    # if v[i]==0
     cmpl $0, %ebx
     je et_block_liber
     jmp et_block_ocupat
@@ -175,11 +175,11 @@ et_block_liber:
 
 et_block_liber_initializare:
 
-    //start=i
+    #start=i
     movl index_verificare_memorie, %ebx
     movl %ebx, start
 
-    //blocksDisp=1
+    #blocksDisp=1
     movl $1, blocksDisp
 
     jmp cont_block_liber
@@ -187,7 +187,7 @@ et_block_liber_initializare:
 
 et_block_liber_incrementare:
 
-    //blocksDisp++
+    # blocksDisp++
     incl blocksDisp
 
     jmp cont_block_liber
@@ -195,7 +195,7 @@ et_block_liber_incrementare:
 
 cont_block_liber:
 
-    // Verificam daca avem suficeiente blocuri
+    # Verificam daca avem suficeiente blocuri
     movl blocksNec, %ebx
     cmpl blocksDisp, %ebx
     je et_block_liber_exit
@@ -205,10 +205,10 @@ cont_block_liber:
 
 et_block_liber_exit:
 
-    //ok=true
+    # ok=true
     movl $1, ok
 
-    //end=start+blocksNec-1;
+    # end=start+blocksNec-1;
     movl start, %ebx
     addl blocksNec, %ebx
     subl $1, %ebx
@@ -219,7 +219,7 @@ et_block_liber_exit:
 
 et_block_ocupat:
 
-    //v[i]!=0
+    # v[i]!=0
     movl $0, blocksDisp
 
 
@@ -249,22 +249,22 @@ et_verificare_memorie_exit:
 
 
 
-//adaugarea propriu-zisa in memomrie
+# adaugarea propriu-zisa in memomrie
 et_adaugare:
 
     movl id, %ecx
     
-    //fr[id]=dim
+    # fr[id]=dim
     movl dim, %ebx
     lea fr, %edi
     movl %ebx, (%edi,%ecx,4)
 
-    //st[id]=start
+    # st[id]=start
     movl start, %ebx
     lea st, %edi
     movl %ebx, (%edi,%ecx,4)
 
-    //dr[id]=end
+    # dr[id]=end
     movl end, %ebx
     lea dr, %edi
     movl %ebx, (%edi,%ecx,4)
@@ -278,7 +278,7 @@ et_adaugare_loop:
     cmpl end, %ecx
     jg et_adaugare_exit
 
-    //v[i]=id
+    # v[i]=id
     movl id, %ebx
     lea v, %edi
     movl %ebx, (%edi,%ecx,4)
@@ -294,11 +294,11 @@ et_adaugare_exit:
 
 
 
-//OPERATIA GET
+#OPERATIA GET
 
 et_get:
 
-    //citire id
+    # citire id
     pushl $id
     pushl $formatRead
     call scanf
@@ -314,7 +314,7 @@ et_get:
     movl (%edi,%ecx,4), %ebx
     push %ebx
 
-    //afisare (st[id], dr[id])
+    # afisare (st[id], dr[id])
     push $formatAfisGet
     call printf
     addl $12, %esp
@@ -331,7 +331,7 @@ et_get:
 
 
 
-//OPERATIA DELETE
+# OPERATIA DELETE
 
 et_delete:
 
@@ -340,7 +340,7 @@ et_delete:
     call scanf
     addl $8, %esp
 
-    //verificare_frecventa
+    # verificare_frecventa
     movl id, %ecx
     lea fr, %edi
     movl (%edi,%ecx,4), %ebx
@@ -348,13 +348,13 @@ et_delete:
     cmpl $0, %ebx
     je et_afisare_neschimbata
 
-    //start=st[id]
+    # start=st[id]
     lea st, %edi
     movl id, %ecx
     movl (%edi,%ecx,4), %ebx
     movl %ebx, start
 
-    //end=dr[id]
+    # end=dr[id]
     lea dr, %edi
     movl id, %ecx
     movl (%edi,%ecx,4), %ebx
@@ -362,7 +362,7 @@ et_delete:
 
     movl start, %ecx
 
-//stergerea din memorie a blocurilor 
+# stergerea din memorie a blocurilor 
 et_delete_vector_loop:
     cmp end, %ecx
     jg et_cont_delete
@@ -375,17 +375,17 @@ et_delete_vector_loop:
 
 et_cont_delete:
 
-    //fr[id]=0
+    # fr[id]=0
     lea fr, %edi
     movl id, %ecx
     movl $0, (%edi,%ecx,4)
 
-    //st[id]=0
+    # st[id]=0
     lea st, %edi
     movl id, %ecx
     movl $0, (%edi,%ecx,4)
 
-    //dr[id]=0
+    # dr[id]=0
     lea dr, %edi
     movl id, %ecx
     movl $0, (%edi,%ecx,4)
@@ -409,7 +409,7 @@ et_afisare_delete_loop:
     movl (%edi,%ecx,4), %ebx
     movl %ebx, v_iplus1
 
-    //if v[i]!=0 && v[i]!=v[i+1]
+    # if v[i]!=0 && v[i]!=v[i+1]
     cmpl $0, v_i
     je cont_afisare_delete_loop
 
@@ -452,14 +452,14 @@ et_delete_exit:
 
 
 
-//OPERATIA DEFRAGMENTATION
+#OPERATIA DEFRAGMENTATION
 
 et_defragmentation:
 
     lea aux, %edi
     movl $0, %ecx
     
-//aux=[0]*1024
+#aux=[0]*1024
 et_zero_aux_loop:
 
     cmp $1024, %ecx
@@ -486,7 +486,7 @@ et_copiere_in_aux_loop:
     lea v, %edi
     movl (%edi,%ecx,4), %ebx
 
-    //if v[i]!=0 adauga in aux
+    # if v[i]!=0 adauga in aux
     cmp $0, %ebx
     jne et_copie
     jmp cont_copiere_in_aux_loop
@@ -503,7 +503,7 @@ cont_copiere_in_aux_loop:
     incl %ecx
     jmp et_copiere_in_aux_loop
 
-//v=aux
+# v=aux
 et_copiere_in_v:
 
     movl $0, %ecx
@@ -528,7 +528,7 @@ et_zero_st_dr:
     movl $0, %ecx
 
 
-//st=dr=[0]*256
+# st=dr=[0]*256
 et_zero_st_dr_loop:
 
     cmp $256, %ecx
@@ -559,19 +559,19 @@ et_defragmentare_loop:
     
     movl %ecx, start
 
-    //st[id]=start
+    # st[id]=start
     lea st, %edi
     movl id, %ebx
     movl start, %eax
     movl %eax, (%edi, %ebx, 4)
 
-    //dim=fr[id]
+    # dim=fr[id]
     lea fr, %edi
     movl id, %ebx
     movl (%edi,%ebx,4), %eax
     movl %eax, dim
 
-    //blocksNec = (dim+7)/8
+    # blocksNec = (dim+7)/8
     movl $8, %ebx
     movl dim, %eax
     xorl %edx, %edx
@@ -579,14 +579,14 @@ et_defragmentare_loop:
     divl %ebx
     movl %eax, blocksNec
 
-    //end=start+blocksNec-1
+    # end=start+blocksNec-1
     movl start, %ebx
     addl blocksNec, %ebx
     subl $1, %ebx
     movl %ebx, end
 
 
-    //dr[id]=end
+    # dr[id]=end
     lea dr, %edi
     movl id, %ebx
     movl end, %eax
@@ -619,9 +619,9 @@ et_defragmentation_exit:
 
 
 
-//MAIN
+# MAIN
 main:
-    //citim numarul de operatii
+    # citim numarul de operatii
     push $nrOp
     push $formatRead
     call scanf
@@ -635,7 +635,7 @@ main_loop:
     cmpl index_main, %ebx
     je et_exit
 
-    //citim operatia
+    # citim operatia
     push $Op
     push $formatRead
     call scanf

@@ -18,8 +18,17 @@
 
 ### Example Operations
 - **Add File**: Allocates blocks for a file based on its size and descriptor.
-- **Get File Location**: Returns the block interval or matrix coordinates for a file.
+- **Get File Location**: Returns the block interval for a file.
 - **Delete File**: Frees the blocks occupied by a file.
 - **Defragmentation**: Compacts memory to optimize storage and reduce fragmentation.
 
+## How to Run
 
+Command to obtain the executable:
+```bash
+gcc -m32 143_Donea_Fernando-Emanuel_0.s -o task1 -no-pie -z noexecstack
+```
+Command to run the executable:
+```bash
+./task1 < input.txt
+```

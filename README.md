@@ -24,11 +24,21 @@
 
 ## How to Run
 
-Command to obtain the executable:
+1. Clone the repository:
+  ```bash
+  git clone https://github.com/fernandodonea/MinimalOS-StorageManager
+  ```
+
+2. Navigate to the project directory:
+  ```bash
+  cd MinimalOS-StorageManager
+  ```
+
+3. Command to obtain the executable:
 ```bash
 gcc -m32 143_Donea_Fernando-Emanuel_0.s -o task1 -no-pie -z noexecstack
 ```
-Command to run the executable:
+4. Command to run the executable:
 ```bash
 ./task1 < input.txt
 ```
